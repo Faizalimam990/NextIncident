@@ -37,3 +37,23 @@ _Coming soon…_
 ```bash
 git clone https://github.com/yourusername/incident-response-system.git
 cd incident-response-system
+```
+##PROJECT STRUCTRE
+
+incident-response-system/
+│
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── templates/
+│   ├── user/
+│   ├── admin/
+│   └── includes/
+│
+├── app.py
+├── models.py
+├── requirements.txt
+└── README.md
+
