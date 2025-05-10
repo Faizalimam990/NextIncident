@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Register</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0f0f2c;
+      overflow: hidden;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.85) !important;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    .navbar-brand, .nav-link {
+      color: #00ffe0 !important;
+      text-shadow: 0 0 8px #00ffe0;
+    }
+
+    .main-wrapper {
+      display: flex;
+      height: calc(100vh - 56px); /* Adjust for navbar height */
+      margin-top: 56px;
+    }
+
+    .left-half {
+      flex: 1;
+      background: url('your-image-path.jpg') no-repeat center center;
+      background-size: cover;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .register-form {
+      animation: fadeInUp 0.8s ease-out both;
+    }
+
+    .register-form form .form-group,
+    .register-form form p {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .register-form form .form-group:nth-child(1) {
+      animation-delay: 0.4s;
+    }
+
+    .register-form form .form-group:nth-child(2) {
+      animation-delay: 0.6s;
+    }
+
+    .register-form form .form-group:nth-child(3) {
+      animation-delay: 0.8s;
+    }
+
+    .register-form form .form-group:nth-child(4) {
+      animation-delay: 1s;
+    }
+
+    .register-form p {
+      animation-delay: 1.2s;
+    }
+
+    .right-half {
+      flex: 1;
+      background: linear-gradient(145deg, #6a11cb, #2575fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      color: #fff;
+    }
+
+    .register-form {
+      width: 100%;
+      max-width: 450px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 0 30px rgba(0, 255, 224, 0.2);
+    }
+
+    .form-group input {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #00ffe0;
+      background: rgba(0, 255, 224, 0.1);
+    }
+
+    .btn-gradient {
+      background: linear-gradient(45deg, #00ffe0, #6a11cb);
+      border: none;
+      padding: 12px 24px;
+      color: #fff;
+      border-radius: 25px;
+      font-size: 1rem;
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-gradient:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #00ffe0, #2575fc);
+    }
+
+    .text-glow {
+      text-shadow: 0 0 10px #00ffe0;
+    }
+
+    /* Flash message container styles */
+    .alert {
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .main-wrapper {
+        flex-direction: column;
+        height: auto;
+      }
+      .left-half {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg nav-bg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">NexIncident</a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('privacy_policy') }}">Privacy Policy</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('privacy_policy') }}">About Us </a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="main-wrapper">
+    <div class="left-half d-flex align-items-center justify-content-center">
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/coworkers-doing-office-work-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--coworking-working-together-coworker-business-teamwork-pack-people-illustrations-4096745.png" class="img-fluid" alt="" srcset="">
+    </div>
+    <div class="right-half">
+      <div class="register-form">
+        <h3 class="text-center text-glow mb-4">Register for NexIncident</h3>
+        
+        <!-- Flash messages at the top of the form -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+          </div>
+          <div class="form-group">
+            {{ form.submit(class="btn-gradient") }}
+          </div>
+        </form>
+        <p class="text-white text-center mt-3">Already have an account?
+          <a href="{{ url_for('login') }}" class="text-primary">Login here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies (important for alert close button) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

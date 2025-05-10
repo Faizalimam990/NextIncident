@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy | NexIncident</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background-color: #0f0f2c;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.8) !important;
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar-brand, .nav-link {
+      color: #00ffe0 !important;
+      text-shadow: 0 0 10px #00ffe0;
+    }
+
+    .section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    h1, h2 {
+      font-weight: 700;
+      color: #00ffe0;
+      text-shadow: 0 0 15px #00ffe0;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+
+    .policy-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #00ffe0;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 30px auto;
+      max-width: 800px;
+      box-shadow: 0 0 30px rgba(0, 255, 224, 0.2);
+    }
+
+    .footer {
+      padding: 40px 0;
+      background: #000;
+      text-align: center;
+      color: #ccc;
+    }
+
+    .scramble-text {
+      font-weight: bold;
+      font-size: 2rem;
+      color: #00ffe0;
+      text-shadow: 0 0 10px #00ffe0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg nav-bg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">NexIncident</a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        {% if current_user.is_authenticated %}
+        {% if current_user.usertype == 'admin' %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        {% endif %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('privacy_policy') }}">About Us</a>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="section" id="hero">
+  <div class="container">
+    <h1 class="scramble-text" id="policyHeading">Privacy and Policy</h1>
+    <p class="lead">Empowering trust through transparency, security, and responsible data use.</p>
+  </div>
+</section>
+
+<!-- Sections -->
+<section class="container" id="policy-content">
+  <div class="policy-card" id="policy-card-1">
+    <h2><i class="fas fa-user-shield"></i> Information We Collect</h2>
+    <p>We gather information like your name, email, device data, and incident details. This helps us personalize your experience and enhance security.</p>
+  </div>
+
+  <div class="policy-card" id="policy-card-2">
+    <h2><i class="fas fa-lock"></i> How We Protect It</h2>
+    <p>Our servers are encrypted, backed by firewalls and advanced threat protection. We employ 256-bit SSL encryption to keep your data safe.</p>
+  </div>
+
+  <div class="policy-card" id="policy-card-3">
+    <h2><i class="fas fa-eye-slash"></i> Your Privacy Rights</h2>
+    <p>You have full control over your data. You may request access, correction, or deletion at any time through your profile settings or contact support.</p>
+  </div>
+
+  <div class="policy-card" id="policy-card-4">
+    <h2><i class="fas fa-users"></i> Third-Party Access</h2>
+    <p>We never sell or trade your data. Some services (e.g., payment gateways) may need partial access under strict contractual obligations.</p>
+  </div>
+
+  <div class="policy-card" id="policy-card-6">
+    <h2><i class="fas fa-sync-alt"></i> Policy Updates</h2>
+    <p>This policy may change to reflect improvements. Users will be notified via email or in-app alerts.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2025 NexIncident. All rights reserved.</p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<!-- GSAP + Plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Physics2DPlugin.min.js"></script>
+
+<!-- Animations -->
+<script>
+  // Register GSAP plugins
+  gsap.registerPlugin(ScrollTrigger, TextPlugin, Physics2DPlugin);
+
+  // Ensure that the page is fully loaded before animating the text
+  window.onload = function() {
+    // Animating the Privacy Policy Heading
+    gsap.to("#policyHeading", {
+      duration: 3,
+      text: "Privacy Policy & Data Commitment",
+      ease: "power2.inOut",
+      delay: 0.5
+    });
+
+    // Scroll Animations for each policy card
+    gsap.from("#policy-card-1", {
+      scrollTrigger: "#policy-card-1", // Trigger when the element comes into view
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      ease: "power2.out",
+      delay: 0.2
+    });
+    
+    gsap.from("#policy-card-2", {
+      scrollTrigger: "#policy-card-2",
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      ease: "power2.out",
+      delay: 0.3
+    });
+
+    gsap.from("#policy-card-3", {
+      scrollTrigger: "#policy-card-3",
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      ease: "power2.out",
+      delay: 0.4
+    });
+
+    gsap.from("#policy-card-4", {
+      scrollTrigger: "#policy-card-4",
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      ease: "power2.out",
+      delay: 0.5
+    });
+
+    gsap.from("#policy-card-5", {
+      scrollTrigger: "#policy-card-5",
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      ease: "power2.out",
+      delay: 0.6
+    });
+
+    gsap.from("#policy-card-6", {
+      scrollTrigger: "#policy-card-6",
+      opacity: 0,
+      y: 60,
+      duration: 1,
+      ease: "power2.out",
+      delay: 0.7
+    });
+  };
+</script>
+
+</body>
+</html>

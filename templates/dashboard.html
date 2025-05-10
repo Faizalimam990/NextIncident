@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexIncident Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(145deg, #0f0f2c, #141e30);
+            background-attachment: fixed;
+            font-family: 'Poppins', sans-serif;
+            color: #f1f1f1;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        #wrapper {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #sidebar-wrapper {
+            min-width: 250px;
+            max-width: 250px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-heading {
+            padding: 1.25rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: #00ffe0;
+            text-shadow: 0 0 10px #00ffe0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .list-group-item {
+            background: transparent;
+            color: #fff;
+            border: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .list-group-item:hover {
+            background: rgba(0, 255, 224, 0.1);
+            color: #00ffe0;
+            text-shadow: 0 0 10px #00ffe0;
+        }
+
+        #page-content-wrapper {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .text-glow {
+            color: #00ffe0;
+            text-shadow: 0 0 10px #00ffe0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px #00ffe0;
+        }
+
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .icon-glow {
+            color: #00ffe0;
+            text-shadow: 0 0 10px #00ffe0;
+        }
+
+        .btn-glass {
+            background: rgba(0, 255, 224, 0.1);
+            border: 1px solid #00ffe0;
+            color: #00ffe0;
+            border-radius: 25px;
+            padding: 10px 25px;
+            transition: 0.3s;
+        }
+
+        .btn-glass:hover {
+            background: rgba(0, 255, 224, 0.3);
+            color: #fff;
+        }
+
+        .glass-card, .glass-modal {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #00ffe0;
+        }
+
+        .form-control {
+            background-color: #2b2b2b;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 8px;
+        }
+
+        .form-control:focus {
+            background-color: #1f1f1f;
+            color: #fff;
+            border-color: #00ffe0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 255, 224, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading">NexIncident</div>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item">Dashboard</a>
+                <a href="#" class="list-group-item">Reports</a>
+                <a href="#" class="list-group-item">Settings</a>
+                <a href="{{ url_for('view_incident') }}" class="list-group-item ">View Incidents</a>
+                <a href="{{ url_for('logout') }}" class="list-group-item text-danger">Logout</a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="text-center mb-5">
+                <h1 class="display-4 text-glow">Welcome, {{ current_user.username }}!</h1>
+                <p class="lead">Monitor and manage incidents efficiently with your futuristic admin dashboard.</p>
+                <button class="btn btn-glass mt-3" data-toggle="modal" data-target="#reportModal">
+                    <i class="fas fa-exclamation-triangle"></i> Report New Incident
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card stat-card text-center">
+                        <div class="card-body">
+                            <h5>Total Users</h5>
+                            <div class="stat-num">{{ total_users }}</div>
+                            <i class="fas fa-users fa-2x icon-glow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card stat-card text-center">
+                        <div class="card-body">
+                            <h5>Total Incidents</h5>
+                            <div class="stat-num">{{ total }}</div>
+                            <i class="fas fa-exclamation-circle fa-2x icon-glow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card stat-card text-center">
+                        <div class="card-body">
+                            <h5>Pending</h5>
+                            <div class="stat-num text-warning">{{ pending }}</div>
+                            <i class="fas fa-clock fa-2x icon-glow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card stat-card text-center">
+                        <div class="card-body">
+                            <h5>Resolved</h5>
+                            <div class="stat-num text-success">{{ completed }}</div>
+                            <i class="fas fa-check-circle fa-2x icon-glow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="card glass-card mt-4 p-4">
+                <h5 class="card-title">Incident Overview</h5>
+                <canvas id="incidentChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form method="POST" action="{{ url_for('report') }}">
+                {{ form.hidden_tag() }}
+                <div class="modal-content glass-modal">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title">Report Incident</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            {{ form.title.label(class="form-label") }}
+                            {{ form.title(class="form-control") }}
+                            {% if form.title.errors %}
+                                <div class="text-danger">{{ form.title.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.description.label(class="form-label") }}
+                            {{ form.description(class="form-control", rows=4) }}
+                            {% if form.description.errors %}
+                                <div class="text-danger">{{ form.description.errors[0] }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        {{ form.submit(class="btn btn-glass") }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('incidentChart').getContext('2d');
+        const incidentChart = new Chart(ctx, {
+            type: 'line',  // Changed from 'bar' to 'line'
+            data: {
+                labels: ['Pending', 'Assigned', 'Completed'],
+                datasets: [{
+                    label: 'Incidents',
+                    data: [{{ pending }}, {{ assigned }}, {{ completed }}],
+                    fill: false,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    tension: 0.4,  // smooth curve
+                    pointBackgroundColor: 'rgba(255, 255, 255, 1)',
+                    pointBorderColor: 'rgba(54, 162, 235, 1)',
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}NexIncident | Futuristic Incident Management{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap 4.6 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    body {
+      background: linear-gradient(145deg, #0f0f2c, #1c1f3f);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+    }
+
+    .navbar {
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      padding: 15px 30px;
+      border-bottom: 1px solid #00ffe0;
+    }
+
+    .navbar-brand {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffe0 !important;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 5px #00ffe0, 0 0 10px #00ffe0; }
+      to { text-shadow: 0 0 20px #00ffe0, 0 0 30px #00ffe0; }
+    }
+
+    .nav-link {
+      color: #ccc !important;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: #00ffe0 !important;
+    }
+
+    .btn-custom {
+      background-color: #00ffe0;
+      color: #000;
+      border-radius: 25px;
+      font-size: 1rem;
+      padding: 10px 25px;
+      margin-top: 20px;
+    }
+    .btn-gradient {
+    background: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient colors */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Adjust padding */
+    font-size: 16px; /* Adjust font size */
+    border-radius: 5px; /* Round the corners */
+    cursor: pointer; /* Add cursor pointer for better UX */
+    transition: background 0.3s ease; /* Smooth transition */
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(45deg, #2575fc, #6a11cb); /* Inverse gradient on hover */
+}
+
+
+    .btn-custom:hover {
+      background-color: #00bfae;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .modal-content {
+      background-color: #1c1e22;
+      border-radius: 15px;
+    }
+
+    .form-label {
+      color: #ccc;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      padding: 20px 0;
+      border-top: 1px solid #00ffe0;
+    }
+
+    .footer-links a {
+      color: #aaa;
+      margin: 0 10px;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: #00ffe0;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <a class="navbar-brand" href="{{ url_for('home') }}"><i class="fas fa-shield-alt"></i> NexIncident</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      {% if current_user.is_authenticated and current_user.usertype == 'admin' %}
+  <li class="nav-item">
+    <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+  </li>
+{% endif %}
+
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('privacy_policy') }}">Privacy Policy</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
+      {% if current_user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+      {% else %}
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-5 animate__animated animate__fadeIn">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  
+  {% block content %}{% endblock %}
+</div>
+
+<footer class="text-center text-white">
+  <div class="footer-links mb-2">
+    <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="mailto:support@nexincident.com">Contact</a>
+  </div>
+  &copy; 2025 NexIncident | All rights reserved
+</footer>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

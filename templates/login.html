@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" crossorigin="anonymous" />
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background-color: #0f0f2c;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.8) !important;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-bg {
+      background-color: black !important;
+    }
+
+    .navbar-brand, .nav-link {
+      color: #00ffe0 !important;
+      text-shadow: 0 0 10px #00ffe0;
+    }
+
+    .split-screen {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .left, .right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .left {
+      background: #0f0f2c;
+    }
+
+    .right {
+      background: linear-gradient(145deg, #6a11cb, #2575fc);
+    }
+
+    .login-form {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      animation: fadeInDown 0.9s ease-out both;
+    }
+
+    .form-group input {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      transition: 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: #00ffe0;
+      background: rgba(0, 255, 224, 0.1);
+      outline: none;
+    }
+
+    .btn-gradient {
+      background: linear-gradient(45deg, #00ffe0, #6a11cb);
+      border: none;
+      padding: 12px 25px;
+      color: #fff;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-gradient:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #00ffe0, #2575fc);
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-form form .form-group,
+    .login-form form button,
+    .login-form p {
+      opacity: 0;
+      animation: fadeInDown 0.7s ease forwards;
+    }
+
+    .login-form form .form-group:nth-child(1) {
+      animation-delay: 0.4s;
+    }
+    .login-form form .form-group:nth-child(2) {
+      animation-delay: 0.6s;
+    }
+    .login-form form button {
+      animation-delay: 0.8s;
+    }
+    .login-form p {
+      animation-delay: 1s;
+    }
+
+    .right img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 20px;
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    a.text-primary {
+      color: #00ffe0 !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg nav-bg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">NexIncident</a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          {% if current_user.is_authenticated %}
+          {% if current_user.is_authenticated and current_user.usertype == 'admin' %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+          </li>
+        {% endif %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('privacy_policy') }}">Privacy Policy</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('privacy_policy') }}">About Us </a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Split Layout -->
+  <div class="split-screen">
+    <!-- Left: Login Form -->
+    <div class="left">
+      <div class="login-form">
+        <h3 class="mb-4">Login to NexIncident</h3>
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            {{ form.email(class="form-control", placeholder="Enter your email") }}
+          </div>
+          <div class="form-group">
+            {{ form.password(class="form-control", placeholder="Enter your password") }}
+          </div>
+          <button type="submit" class="btn-gradient">Login</button>
+        </form>
+        <p class="mt-3">Don't have an account? <a href="{{ url_for('register') }}" class="text-primary">Register Here</a></p>
+      </div>
+    </div>
+
+    <!-- Right: Illustration -->
+    <div class="right">
+      <img src="https://cdn3d.iconscout.com/3d/premium/thumb/businessman-having-online-video-call-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--conference-interview-meeting-applicant-job-pack-business-illustrations-5230942.png" alt="NexIncident Illustration">
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home - NexIncident</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
+  <!-- AOS Animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+  <!-- Lordicon -->
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(145deg, #0f0f2c, #141e30);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar-brand, .nav-link {
+      color: #00ffe0 !important;
+      text-shadow: 0 0 10px #00ffe0;
+    }
+
+    .hero-section {
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
+      background-size: cover;
+      position: relative;
+    }
+
+    .hero-section h1 {
+      font-size: 3rem;
+      color: #00ffe0;
+      text-shadow: 0 0 20px #00ffe0;
+    }
+
+    .hero-section p {
+      font-size: 1.3rem;
+      color: #ccc;
+    }
+
+    .btn-glass {
+      background: rgba(0, 255, 224, 0.15);
+      border: 1px solid #00ffe0;
+      color: #00ffe0;
+      border-radius: 30px;
+      padding: 10px 25px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn-glass:hover {
+      background: #00ffe0;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 25px #00ffe0;
+    }
+
+    .testimonial-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      color: #fff;
+      text-align: center;
+    }
+
+    footer {
+      background: #000;
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-link {
+      color: #00ffe0;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-shadow: 0 0 10px #00ffe0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">NexIncident</a>
+      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          {% if current_user.is_authenticated %}
+            {% if current_user.usertype == 'admin' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('privacy_policy') }}">About Us</a>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('privacy_policy') }}">About Us</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+<section class="hero-section d-flex align-items-center justify-content-center text-center" id="hero">
+    <div>
+      <h1 id="hero-title" class="display-4 text-glow">Loading...</h1>
+      <p id="hero-subtitle" class="lead mt-3">...</p>
+      <a href="{{ url_for('dashboard') }}" class="btn btn-glass mt-4">Enter Dashboard</a>
+    </div>
+  </section>
+  
+  <!-- GSAP + TextPlugin CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<!-- SplitText Plugin (from GSAP Club, use alternative if not available) -->
+<script src="https://assets.codepen.io/16327/SplitText3.min.js"></script>
+  
+  <script>
+    gsap.registerPlugin(TextPlugin);
+  
+    // Animate scrambled hero title
+    gsap.to("#hero-title", {
+      duration: 2.5,
+      text: "Heavenly Incident Management",
+      ease: "power3.out",
+      delay: 0.5
+    });
+  
+    // Animate scrambled subtitle
+    gsap.to("#hero-subtitle", {
+      duration: 2.5,
+      text: "Where calm meets control. Monitor, resolve, and shine bright like a star.",
+      ease: "power2.inOut",
+      delay: 2.5
+    });
+  </script>
+  
+  <!-- Optional: Add a soft starry background -->
+  <style>
+  .hero-section {
+  
+    background: radial-gradient(ellipse at center, #0f0f2c 0%, #141e30 100%);
+    color: #fff;
+    padding: 10px 20px;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    background-size: cover;
+    backdrop-filter: blur(2px);
+  }
+  </style>
+
+<!-- Motion Path Section -->
+<section class="motionpath-section py-5" id="motionpath">
+    <div class="container text-center">
+      <h2 class="mb-5 text-glow">From Incident to Resolution</h2>
+      <svg id="motionPathSVG" width="100%" height="250" viewBox="0 0 1200 250">
+        <path id="incidentPath" fill="none" stroke="#ffffff22" stroke-width="4"
+          d="M100,200 C300,50 900,350 1100,100" />
+  
+        <circle id="tracker" r="20" fill="#00e0ff" />
+        
+        <!-- Waypoints -->
+        <text x="90" y="220" fill="#fff" font-size="16" class="glow">Incident</text>
+        <text x="550" y="80" fill="#fff" font-size="16" class="glow">Monitor</text>
+        <text x="1090" y="130" fill="#fff" font-size="16" class="glow">Report</text>
+      </svg>
+    </div>
+  </section>
+  
+  <!-- GSAP + MotionPathPlugin + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  
+  <script>
+    gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
+  
+    gsap.to("#tracker", {
+      scrollTrigger: {
+        trigger: "#motionpath",
+        start: "top 80%",
+        end: "bottom top",
+        scrub: 1,
+      },
+      duration: 4,
+      ease: "power1.inOut",
+      motionPath: {
+        path: "#incidentPath",
+        align: "#incidentPath",
+        autoRotate: true,
+        alignOrigin: [0.5, 0.5]
+      }
+    });
+  </script>
+  
+  <style>
+  .motionpath-section {
+   
+    height: 70vh;
+    background: radial-gradient(ellipse at center, #0f0f2c 0%, #141e30 100%);
+    color: #fff;
+    background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+    background-size: cover;
+    backdrop-filter: blur(2px);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 5px #00e0ff, 0 0 10px #00e0ff;
+  }
+  
+  .glow {
+    text-shadow: 0 0 10px #00e0ff, 0 0 20px #00e0ff;
+    font-weight: bold;
+  }
+  </style>
+  
+  
+  
+  <!-- Features Section -->
+  <section class="container py-5">
+    <div class="row text-center">
+      <div class="col-md-4 mb-4" data-aos="fade-up">
+        <div class="feature-card">
+          <lord-icon
+          src="https://cdn.lordicon.com/wjyqkiew.json"
+          trigger="hover"
+          stroke="light"
+          colors="primary:#00ffe0"
+          style="width:80px;height:80px">
+      </lord-icon>
+          <h4 class="mt-3">Real-Time Tracking</h4>
+          <p>Instant updates and monitoring for each reported incident in a cosmic flow.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-card">
+          <lord-icon
+    src="https://cdn.lordicon.com/sjoccsdj.json"
+    trigger="hover"
+    colors="primary:#00ffe0"
+    stroke="light"
+    style="width:80px;height:80px">
+</lord-icon>
+          <h4 class="mt-3">Secure System</h4>
+          <p>Encrypted like the stars' secrets — only the rightful eyes can see.</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-card">
+          <lord-icon
+    src="https://cdn.lordicon.com/jeuxydnh.json"
+    trigger="hover"
+    stroke="light"
+    colors="primary:#00ffe0"
+    style="width:80px;height:80px">
+</lord-icon>
+          <h4 class="mt-3">Instant Alerts</h4>
+          <p>Feel the pulse. Get notified the moment something demands attention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+  <section class="mt-5 mb-5 text-justify">
+    <h4 id="why-heading" class="display-4 ml-2 font-weight-bold"
+        style="background: linear-gradient(90deg, #00c6ff, #0072ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      Why NexIncident?
+    </h4>
+    <p class="lead mt-4 px-3" style="max-width: 800px; margin: 0 auto;">
+      NexIncident is your all-in-one platform for incident reporting and management. Whether you're an employee or an administrator, our system ensures fast, secure, and organized tracking of all workplace issues. With real-time updates, role-based access, intuitive UI, and insightful visual dashboards — we empower teams to resolve problems before they escalate. Save time, improve accountability, and build a safer, more responsive environment with NexIncident.
+    </p>
+  </section>
+</div>
+<div class="col-md-6 text-center">
+  <lord-icon
+    src="https://cdn.lordicon.com/cvwjmeon.json"
+    trigger="hover"
+    colors="primary:#ffffff,secondary:#104891,tertiary:#ffffff"
+    style="width:500px;height:500px">
+</lord-icon>
+</div>
+
+  </div>
+</div>
+
+  <!-- Testimonials -->
+  <section class="container py-5">
+    <div class="text-center mb-4">
+      <h2 class="text-glow">What Our Users Say</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-4" data-aos="fade-right">
+        <div class="testimonial-card">
+          <p>"This system is a game-changer. Clean, fast, and feels like managing from a spaceship!"</p>
+          <strong>- Alex, IT Manager</strong>
+        </div>
+      </div>
+      <div class="col-md-6 mb-4" data-aos="fade-left">
+        <div class="testimonial-card">
+          <p>"The UI is otherworldly! And we’ve never had such clear control over incidents."</p>
+          <strong>- Priya, Admin Lead</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="mb-2">Developed By <span class="text-glow" ><a href="https://faizalimam.pythonanywhere.com/" style="text-decoration: none; color: white;">Faizal Imam </a></span></p>
+    <div>
+      <a class="footer-link" href="#">About</a>
+      <a class="footer-link" href="#">Privacy</a>
+      <a class="footer-link" href="#">Contact</a>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true });
+  </script>
+</body>
+</html>

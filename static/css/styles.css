@@ -1,0 +1,53 @@
+body {
+    background: linear-gradient(145deg, #0f0f2c, #141e30);
+    background-attachment: fixed;
+    font-family: 'Poppins', sans-serif;
+    color: #f1f1f1;
+  }
+  
+  .text-glow {
+    color: #00ffe0;
+    text-shadow: 0 0 10px #00ffe0;
+  }
+  
+  .stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+  }
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  .icon-glow {
+    color: #00ffe0;
+    text-shadow: 0 0 10px #00ffe0;
+  }
+  
+  .btn-glass {
+    background: rgba(0, 255, 224, 0.1);
+    border: 1px solid #00ffe0;
+    color: #00ffe0;
+    border-radius: 25px;
+    padding: 10px 25px;
+    transition: 0.3s;
+  }
+  .btn-glass:hover {
+    background: rgba(0, 255, 224, 0.3);
+    color: #fff;
+  }
+  
+  .glass-card, .glass-modal {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  
